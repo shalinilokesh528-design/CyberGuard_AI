@@ -1,0 +1,155 @@
+{
+  "theme": "dark-preferred",
+  "typography": {
+    "font_families": {
+      "headings": "Cabinet Grotesk",
+      "body": "IBM Plex Sans",
+      "monospace": "IBM Plex Mono"
+    },
+    "installation": "yarn add @fontsource/cabinet-grotesk @fontsource/ibm-plex-sans @fontsource/ibm-plex-mono",
+    "rules": [
+      "BANNED LIST: Do not use Inter, Roboto, Open Sans, Lato for Headings.",
+      "Variable Fonts: Use font-light for elegance or font-black for impact. Avoid defaulting to generic Bold.",
+      "Headlines (Size > 32px): MUST use tight letter spacing: tracking-tight or tracking-tighter.",
+      "Overlines / Labels: MUST be Uppercase + Tiny + Wide Spacing (tracking-[0.2em]).",
+      "Line Height: Tight (leading-none) for headers, Loose (leading-relaxed) for body.",
+      "Hierarchy Gap Rule: The jump between a heading and its subheading must not exceed 2 Tailwind steps."
+    ],
+    "text_size_hierarchy": {
+      "H1": "text-4xl sm:text-5xl lg:text-6xl",
+      "H2": "text-2xl sm:text-3xl lg:text-4xl",
+      "H3": "text-xl sm:text-2xl",
+      "H4": "text-lg sm:text-xl",
+      "Body": "text-base (mobile: text-sm)",
+      "Small_Accent_Labels": "text-sm or text-xs"
+    }
+  },
+  "colors": {
+    "archetype": "ARCHETYPE 4 (Swiss & High Contrast) mixed with ARCHETYPE 7 (Electric & Neon)",
+    "vibe": "Command-center focus, objective, rigid, functional. High-visibility 'Tactical' look.",
+    "rules": [
+      "The 'Tinted Grey' Rule: Never use pure #000000 or #808080. Always tint neutral greys with a tiny bit of Blue (cool).",
+      "Contrast Check: Ensure text meets APCA standards.",
+      "ALWAYS explicitly set text color on hover. Hover state color must be a lighter hue of ACTIVE state color.",
+      "Focus States: Must have HIGHER contrast than default state.",
+      "ONLY use primary / brand color for CTAs like button, form, etc. LIMIT the use of PRIMARY color.",
+      "FORBIDDEN_COLOR: teal green or teal blue (#1B93A4)."
+    ],
+    "css_variables_override": {
+      "dark": {
+        "--background": "oklch(0.12 0.01 250)",
+        "--foreground": "oklch(0.98 0 0)",
+        "--card": "oklch(0.15 0.01 250)",
+        "--card-foreground": "oklch(0.98 0 0)",
+        "--popover": "oklch(0.15 0.01 250)",
+        "--border": "oklch(0.25 0.02 250)",
+        "--input": "oklch(0.25 0.02 250)",
+        "--primary": "oklch(0.70 0.15 250)",
+        "--primary-foreground": "oklch(0.12 0 0)",
+        "--destructive": "oklch(0.60 0.25 25)",
+        "--destructive-foreground": "oklch(0.98 0 0)",
+        "--ring": "oklch(0.70 0.15 250)",
+        "--radius": "0rem"
+      }
+    }
+  },
+  "visual_enhancers": {
+    "surface_strategy": "GRID BORDERS (The 'Technical' Look)",
+    "rules": [
+      "Expose the skeleton. Make the grid visible.",
+      "Container: use border-collapse style layout if applicable.",
+      "Items: border-r border-b border-border/40 (subtle borders on right and bottom of every grid item).",
+      "Visual Interest: Remove the border on the last item of a row to create an 'open' edge.",
+      "Dashboard Cards: Flat background, 1px subtle border, no shadow. Hover: Slight lift (-translate-y-1), border color darkens/glows slightly.",
+      "NO glassmorphism for data-heavy sections (prevents visual refraction of data)."
+    ],
+    "textures_and_effects": [
+      "Use crisp edges via semi-transparent borders + shadows.",
+      "Retro-Futurism/Terminal elements ONLY for the Simulator/Terminal components (e.g., green/cyan monospace text on pure black for logs)."
+    ]
+  },
+  "component_rules": {
+    "buttons": "Sharp corners (rounded-none), high contrast text. Hover must be clearly defined.",
+    "forms": "Use Shadcn components. No native inputs. Strip the 'Vercel-look' (remove rounded corners, use stark 1px borders).",
+    "charts": "Use Shadcn charts / Recharts. MUST be accessible (color-blind-friendly palettes).",
+    "tables": "Dense, crisp lines, left-aligned data. Use Phosphor Icons for actions.",
+    "navigation": "Header must have a background (solid or crystal glass). Fixed headers must have z-50 and not overlap content.",
+    "toasts": "Use Sonner for toasts."
+  },
+  "grids_layouts": {
+    "strategy": "MODE B: High Density Grid (For Dashboards / Analytics)",
+    "rules": [
+      "Goal: Density, Data Correlation, Scanability.",
+      "Base Grid: grid-cols-1 md:grid-cols-3 lg:grid-cols-4 or 12-column.",
+      "Gap Strategy: Tight (gap-4 or gap-6).",
+      "Widget Ratios: Summary (col-span-1), Primary Data (col-span-2 row-span-2 or col-span-3), Feed/List (col-span-1 row-span-2).",
+      "Every pixel must be utilized. Use h-full on children to ensure they stretch to match neighbors. No jagged bottoms.",
+      "Mobile-First: Always start with grid-cols-1."
+    ],
+    "spacing": [
+      "Dense for internal card data (p-4).",
+      "Generous Spacing Philosophy for sections (p-8 to p-12).",
+      "Containers with border MUST have padding on text content to avoid collision."
+    ]
+  },
+  "motion": {
+    "rules": [
+      "Hover states (all interactive elements).",
+      "Click/press states.",
+      "Focus states (accessibility).",
+      "Entrance animations (staggered for lists) using Framer Motion.",
+      "Transition effects (smooth state changes).",
+      "NEVER apply universal transition (transition: all). Always target specific properties (e.g., transition: transform 0.2s ease, opacity 0.2s ease)."
+    ]
+  },
+  "accessibility": {
+    "rules": [
+      "Normal Text (below 18px): Minimum 4.5:1 contrast ratio.",
+      "Large Text (18px+): Minimum 3:1 contrast ratio.",
+      "MUST respect prefers-reduced-motion.",
+      "Add aria-hidden='true' to purely decorative animations/icons.",
+      "All interactive and key informational elements MUST include a data-testid attribute (e.g., data-testid='login-submit-button')."
+    ]
+  },
+  "media": {
+    "icons": {
+      "library": "@phosphor-icons/react",
+      "installation": "yarn add @phosphor-icons/react",
+      "usage": "Use for dense dashboards and developer tools (Duotone or Regular weight)."
+    },
+    "image_urls": {
+      "login_background": {
+        "url": "https://images.unsplash.com/photo-1644088379091-d574269d422f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NDh8MHwxfHNlYXJjaHwxfHxjeWJlcnNlY3VyaXR5JTIwYWJzdHJhY3QlMjBuZXR3b3JrfGVufDB8fHx8MTc4ODIwMzE4OXww&ixlib=rb-4.1.0&q=85",
+        "description": "Abstract blue network lines and dots. Good for Login or Hero background overlay.",
+        "category": "auth_pages"
+      }
+    }
+  },
+  "3d_libraries": {
+    "strategy": "The Specialists (Deep Data & Geography)",
+    "recommendation": "Use Recharts for standard SOC metrics (anomalies, event counts). If visualizing geographic threat origins, use react-globe.gl. If not, stick to crisp 2D Recharts for maximum clarity.",
+    "installation": "yarn add recharts"
+  },
+  "instructions_to_main_agent": [
+    "Prioritize a polished SOC experience without sacrificing clarity or safety labeling.",
+    "Ensure the Agentic AI portion (Decision, Response) is visually distinct from the ML classifier (Anomaly Detection). Use distinct color coding (e.g., Cyan for ML, Yellow/Orange for Agent actions).",
+    "Never use placeholder URLs (via.placeholder.com).",
+    "Preserve partial shell rendering when API is unavailable (e.g., Terminal UI for the simulator).",
+    "Synthetic demonstration data must be clearly labeled as 'SIMULATED' or 'SAFE MODE'."
+  ],
+  "universal_guidelines_for_main_agent": [
+    "You tend to converge toward generic, 'on distribution' outputs. Avoid the 'AI slop' aesthetic.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects carefully; prefer solid surfaces for data-heavy dashboard views.",
+    "You MUST NOT apply universal transition (transition: all).",
+    "You MUST NOT center align the app container, i.e., do not add .App { text-align: center; } in the css file.",
+    "NEVER use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons. Use Phosphor icons.",
+    "Every interaction needs micro-animations - hover states, transitions. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Prioritize using pre-existing components from src/components/ui.",
+    "Use sonner for toasts.",
+    "CRITICAL: DO NOT use complete transparent background in header, overlays, any surface that has content under it."
+  ]
+}

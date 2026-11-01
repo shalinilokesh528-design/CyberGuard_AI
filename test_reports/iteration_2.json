@@ -1,0 +1,30 @@
+{
+  "passed": 13,
+  "failed": 1,
+  "bugs": [
+    {
+      "severity": "high",
+      "criterion": "Incident management",
+      "evidence": "Browser check incident-status-update failed twice: after selecting the first incident status select, it remained OPEN instead of INVESTIGATING after 5 seconds. Failure screenshot: /root/.emergent/automation_output/20260831_192710_266/incident-status-update-failure.png. Backend cross-check passed in test_tscheck_incidents.py (POST /api/detection/analyze 200, GET /api/incidents 200, PATCH /api/incidents/{id} 200 with returned status INVESTIGATING), so the remaining issue is in the frontend incident-row update flow or its handling of the selected existing row. No browser console errors were recorded."
+    }
+  ],
+  "action_items": [
+    "Investigate the frontend incident status mutation for the first rendered incident: capture PATCH response and verify query invalidation/state update; rerun incident-status-update after fixing."
+  ],
+  "retest_needed": true,
+  "checks": [
+    {"criterion":"Admin authentication and backend-driven dashboard","name":"test_tscheck_auth_dashboard.py","lane":"backend","status":"passed","evidence":"pytest passed; POST /api/auth/login 200 returned admin/ADMIN and GET /api/dashboard/summary 200 returned KPI/distribution fields."},
+    {"criterion":"Admin authentication and backend-driven dashboard","name":"admin-auth-dashboard","lane":"browser","status":"passed","evidence":"Authenticated preview rendered SOC sidebar/topbar, ADMIN user, KPI card, and severity chart."},
+    {"criterion":"Safe simulator and realtime feed","name":"test_tscheck_simulator.py","lane":"backend","status":"passed","evidence":"pytest passed; POST /api/simulator/start 200 returned RUNNING with safe synthetic settings and health reported safe_mode true."},
+    {"criterion":"Safe simulator and realtime feed","name":"safe-simulator-realtime","lane":"browser","status":"passed","evidence":"Monitoring page showed SIMULATED / DEMONSTRATION DATA; START changed terminal to RUNNING and SAFE MODE KPI remained ENABLED."},
+    {"criterion":"Agentic workflow and threat details","name":"test_tscheck_detection_agents.py","lane":"backend","status":"passed","evidence":"pytest passed; POST /api/detection/analyze 200 created a detection, GET /api/detections/{id} 200 returned confidence/risk/severity and five agent executions, and GET /api/agents returned five agents."},
+    {"criterion":"Agentic workflow and threat details","name":"threat-details-agent-timeline","lane":"browser","status":"passed","evidence":"Threat Detection listed a row; selecting it opened structured explanation and five-agent timeline including Monitoring Agent and Response Agent."},
+    {"criterion":"Incident management","name":"test_tscheck_incidents.py","lane":"backend","status":"passed","evidence":"pytest passed; newly created high-risk detection produced an incident and PATCH /api/incidents/{id} 200 returned INVESTIGATING."},
+    {"criterion":"Incident management","name":"incident-status-update","lane":"browser","status":"failed","evidence":"After selecting the first rendered incident status control, UI remained OPEN rather than INVESTIGATING; screenshot captured at /root/.emergent/automation_output/20260831_192710_266/incident-status-update-failure.png. Backend endpoint is healthy per passing test."},
+    {"criterion":"ML center and reports","name":"test_tscheck_ml_reports.py","lane":"backend","status":"passed","evidence":"pytest passed; models, training, report summary, CSV and PDF export endpoints returned expected successful responses/content types."},
+    {"criterion":"ML center and reports","name":"ml-models-and-reports","lane":"browser","status":"passed","evidence":"ML page showed computed synthetic metrics and evaluation control; Reports showed summary sections and actionable CSV/PDF controls."},
+    {"criterion":"Audit and safe settings","name":"test_tscheck_audit_settings.py","lane":"backend","status":"passed","evidence":"pytest passed; audit logs omitted password secrets, settings reported safe_mode true, and ADMIN setting update succeeded."},
+    {"criterion":"Audit and safe settings","name":"audit-and-safe-settings","lane":"browser","status":"passed","evidence":"Audit ledger rendered without password_hash; Settings showed SAFE_MODE ENABLED, threshold, and configurable risk-scoring disclaimer."},
+    {"criterion":"AI Agents","name":"agent-pipeline-telemetry","lane":"browser","status":"passed","evidence":"Agent control center rendered pipeline telemetry and exactly five agent cards."}
+  ]
+}

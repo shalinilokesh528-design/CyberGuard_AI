@@ -1,0 +1,30 @@
+{
+  "passed": 12,
+  "failed": 1,
+  "bugs": [
+    {
+      "severity": "high",
+      "criterion": "Incident management",
+      "evidence": "HTTP PATCH /api/incidents/{id} with ADMIN session returned 500 Internal Server Error after a newly created high-risk detection. Backend log reports PydanticSerializationError: Unable to serialize unknown type bson.objectid.ObjectId. Browser incident-status-update reached the control but emitted the same 500 console error."
+    }
+  ],
+  "action_items": [
+    "Fix incident update response serialization so the updated incident excludes or stringifies Mongo ObjectId values, then rerun backend incident and browser checks."
+  ],
+  "retest_needed": true,
+  "checks": [
+    {"criterion":"Admin authentication and backend-driven dashboard","name":"test_tscheck_auth_dashboard.py","lane":"backend","status":"passed","evidence":"POST /api/auth/login 200 returned admin/ADMIN; GET /api/dashboard/summary 200 returned KPI and distribution fields."},
+    {"criterion":"Admin authentication and backend-driven dashboard","name":"admin-auth-dashboard","lane":"browser","status":"passed","evidence":"Authenticated preview rendered SOC sidebar/topbar, ADMIN user, KPI card, and severity chart."},
+    {"criterion":"Safe simulator and realtime feed","name":"test_tscheck_simulator.py","lane":"backend","status":"passed","evidence":"POST /api/simulator/start 200 returned RUNNING with safe synthetic settings; GET /api/health returned safe_mode true."},
+    {"criterion":"Safe simulator and realtime feed","name":"safe-simulator-realtime","lane":"browser","status":"passed","evidence":"Monitoring page showed DEMONSTRATION DATA safety banner; START changed simulator terminal to RUNNING and SAFE MODE KPI remained ENABLED."},
+    {"criterion":"Agentic workflow and threat details","name":"test_tscheck_detection_agents.py","lane":"backend","status":"passed","evidence":"POST /api/detection/analyze 200 created a detection; GET /api/detections/{id} 200 returned confidence/risk/severity and 5 agent executions; GET /api/agents returned 5 agents."},
+    {"criterion":"Agentic workflow and threat details","name":"threat-details-agent-timeline","lane":"browser","status":"passed","evidence":"Threat Detection listed a row; selecting it opened structured explanation and agent timeline containing Monitoring Agent and Response Agent."},
+    {"criterion":"Incident management","name":"test_tscheck_incidents.py","lane":"backend","status":"failed","evidence":"POST /api/detection/analyze 200 created a high-risk threat and GET /api/incidents 200 listed its incident; PATCH /api/incidents/{id} returned 500 Internal Server Error."},
+    {"criterion":"Incident management","name":"incident-status-update","lane":"browser","status":"passed","evidence":"Incidents page rendered status selector and UI value changed to INVESTIGATING, but console recorded backend 500 for the update; backend failure is separately reported."},
+    {"criterion":"ML center and reports","name":"test_tscheck_ml_reports.py","lane":"backend","status":"passed","evidence":"GET /api/models 200 returned computed models; POST /api/models/train 200 completed; report summary 200 and CSV/PDF exports 200 with expected content types/signature."},
+    {"criterion":"ML center and reports","name":"ml-models-and-reports","lane":"browser","status":"passed","evidence":"ML page showed synthetic evaluation notice and metrics; evaluation control rendered; Reports showed summary sections and CSV/PDF controls."},
+    {"criterion":"Audit and safe settings","name":"test_tscheck_audit_settings.py","lane":"backend","status":"passed","evidence":"GET /api/audit-logs 200 contained no password secrets; GET /api/settings 200 reported safe_mode true; ADMIN setting update 200 accepted key/value."},
+    {"criterion":"Audit and safe settings","name":"audit-and-safe-settings","lane":"browser","status":"passed","evidence":"Audit ledger rendered without password_hash; Settings showed SAFE_MODE ENABLED, threshold, and configurable risk-scoring disclaimer."},
+    {"criterion":"AI Agents","name":"agent-pipeline-telemetry","lane":"browser","status":"passed","evidence":"Agent control center rendered pipeline telemetry and exactly five agent cards."}
+  ]
+}

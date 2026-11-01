@@ -1,0 +1,23 @@
+{
+  "passed": 14,
+  "failed": 0,
+  "bugs": [],
+  "action_items": [],
+  "retest_needed": false,
+  "checks": [
+    {"criterion":"Admin authentication and backend-driven dashboard","name":"test_tscheck_auth_dashboard.py","lane":"backend","status":"passed","evidence":"pytest suite passed; POST /api/auth/login 200 returned admin/ADMIN and GET /api/dashboard/summary 200 returned KPI/distribution fields."},
+    {"criterion":"Admin authentication and backend-driven dashboard","name":"admin-auth-dashboard","lane":"browser","status":"passed","evidence":"Reran persisted check successfully; authenticated preview rendered SOC sidebar/topbar, ADMIN user, KPI card, and severity chart."},
+    {"criterion":"Safe simulator and realtime feed","name":"test_tscheck_simulator.py","lane":"backend","status":"passed","evidence":"pytest suite passed; POST /api/simulator/start 200 returned RUNNING with safe synthetic settings and health reported safe_mode true."},
+    {"criterion":"Safe simulator and realtime feed","name":"safe-simulator-realtime","lane":"browser","status":"passed","evidence":"Reran persisted check successfully; Monitoring page showed SIMULATED / DEMONSTRATION DATA, START changed terminal to RUNNING, and SAFE MODE KPI remained ENABLED."},
+    {"criterion":"Agentic workflow and threat details","name":"test_tscheck_detection_agents.py","lane":"backend","status":"passed","evidence":"pytest suite passed; POST /api/detection/analyze 200 created a detection, GET /api/detections/{id} 200 returned confidence/risk/severity and five agent executions, and GET /api/agents returned five agents."},
+    {"criterion":"Agentic workflow and threat details","name":"threat-details-agent-timeline","lane":"browser","status":"passed","evidence":"Reran persisted check successfully; Threat Detection listed a row, selection opened structured explanation, and five-agent timeline rendered."},
+    {"criterion":"Incident management","name":"test_tscheck_incidents.py","lane":"backend","status":"passed","evidence":"pytest suite passed; newly created high-risk detection produced an incident and PATCH /api/incidents/{id} 200 returned INVESTIGATING."},
+    {"criterion":"Incident management","name":"incident-status-update","lane":"browser","status":"passed","evidence":"Reran persisted check successfully; ADMIN changed a rendered incident status and the updated status was visible in the UI."},
+    {"criterion":"ML center and reports","name":"test_tscheck_ml_reports.py","lane":"backend","status":"passed","evidence":"pytest suite passed; models, training, report summary, CSV and PDF export endpoints returned expected successful responses/content types."},
+    {"criterion":"ML center and reports","name":"ml-models-and-reports","lane":"browser","status":"passed","evidence":"Reran persisted check successfully; ML page showed computed synthetic metrics and evaluation control, while Reports showed summary sections and actionable CSV/PDF controls."},
+    {"criterion":"Audit and safe settings","name":"test_tscheck_audit_settings.py","lane":"backend","status":"passed","evidence":"pytest suite passed; audit logs omitted password secrets, settings reported safe_mode true, and ADMIN setting update succeeded."},
+    {"criterion":"Audit and safe settings","name":"audit-and-safe-settings","lane":"browser","status":"passed","evidence":"Reran persisted check successfully; Audit ledger rendered without password_hash and Settings showed SAFE_MODE ENABLED, threshold, and configurable risk-scoring disclaimer."},
+    {"criterion":"AI Agents","name":"agent-pipeline-telemetry","lane":"browser","status":"passed","evidence":"Reran persisted check successfully; Agent control center rendered pipeline telemetry and exactly five agent cards."},
+    {"criterion":"Backend regression suite","name":"backend-pytest-suite","lane":"backend","status":"passed","evidence":"python -m pytest -q -p no:cacheprovider completed with 7 passed in 1.44s against the running backend and Mongo data."}
+  ]
+}
